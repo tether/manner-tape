@@ -5,10 +5,9 @@
 [![Downloads](https://img.shields.io/npm/dm/manner-tape.svg)](http://npm-stat.com/charts.html?package=manner-tape)
 [![guidelines](https://tether.github.io/contribution-guide/badge-guidelines.svg)](https://github.com/tether/contribution-guide)
 
-This is a simple description.
+[Tape](https://github.com/substack/tape) runner to test manner services against JSON objects describing the expected outputs for given inputs.
 
 ## Usage
-
 
 ```json
 {
@@ -17,16 +16,18 @@ This is a simple description.
       {
         "description": "it should return hello world",
         "result": {
-          "200": "hello world"
-          }
+          "status": 200,
+          "payload": "hello world"
+        }
       },
       {
-        "description": "it should return hello bob when name is passed",
+        "description": "it should return hello bob when name bob is passed in query",
         "query": {
           "name": "bob"
         },
         "result": {
-          "200": "hello bob"
+          "status": 200,
+          "payload": "hello bob"
         }
       }
     ]
