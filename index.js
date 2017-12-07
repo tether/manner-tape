@@ -33,7 +33,13 @@ function service(service, json) {
           assert.plan(plan(status, payload))
           test[key](path, obj.query || {}, obj.body || {}).then(response => {
             if (status != null) assert.equal(response.status, status)
-            if (payload != null) assert.deepEqual(response.payload, payload)
+            if (payload != null) {
+              if (typeof payload === 'function') {
+                assert.equal(payload(response.payload), true)
+              } else {
+                assert.deepEqual(response.payload, payload)
+              }
+            }
           })
         })
       })
