@@ -1,6 +1,5 @@
 # Manner-Tape
 
-[![Build Status](https://travis-ci.org/tether/manner-tape.svg?branch=master)](https://travis-ci.org/tether/manner-tape)
 [![NPM](https://img.shields.io/npm/v/manner-tape.svg)](https://www.npmjs.com/package/manner-tape)
 [![Downloads](https://img.shields.io/npm/dm/manner-tape.svg)](http://npm-stat.com/charts.html?package=manner-tape)
 [![guidelines](https://tether.github.io/contribution-guide/badge-guidelines.svg)](https://github.com/tether/contribution-guide)
