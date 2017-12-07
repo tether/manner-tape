@@ -22,27 +22,39 @@ function service(service, json) {
   const test = manner(service)
   Object.keys(json).map(key => {
     const method = json[key]
-    Object.keys(method).map(path => {
-      method[path].map(obj => {
-        const result = obj.result
-        const {
-          status,
-          payload
-        } = result
-        tape(obj.description, assert => {
-          assert.plan(plan(status, payload))
-          test[key](path, obj.query || {}, obj.body || {}).then(response => {
-            if (status != null) assert.equal(response.status, status)
-            if (payload != null) {
-              if (typeof payload === 'function') {
-                assert.equal(payload(response.payload), true)
-              } else {
-                assert.deepEqual(response.payload, payload)
-              }
-            }
-          })
-        })
-      })
+    Object.keys(method).map(route => {
+      method[route].map(obj => testCase(test[key], route, obj))
+    })
+  })
+}
+
+
+/**
+ * Run test case.
+ *
+ * @param {Function} method
+ * @param {String} route
+ * @param {Object} obj
+ * @api private
+ */
+
+function testCase (method, route, obj) {
+  const result = obj.result
+  const {
+    status,
+    payload
+  } = result
+  tape(obj.description, assert => {
+    assert.plan(plan(status, payload))
+    method(route, obj.query || {}, obj.body || {}).then(response => {
+      if (status != null) assert.equal(response.status, status)
+      if (payload != null) {
+        if (typeof payload === 'function') {
+          assert.equal(payload(response.payload), true)
+        } else {
+          assert.deepEqual(response.payload, payload)
+        }
+      }
     })
   })
 }
