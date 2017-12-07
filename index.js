@@ -23,7 +23,13 @@ function service(service, json) {
   Object.keys(json).map(key => {
     const method = json[key]
     Object.keys(method).map(route => {
-      method[route].map(obj => testCase(test[key], route, obj))
+      var cases = method[route]
+      var cb = test[key]
+      if (cases instanceof Array) {
+        cases.map(obj => testCase(cb, route, obj))
+      } else {
+        Object.keys(cases).map(identifier => testCase(cb, route, cases[identifier]))
+      }
     })
   })
 }
