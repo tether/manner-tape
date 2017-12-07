@@ -17,6 +17,15 @@
           "status": 200,
           "payload": "hello bob"
         }
+      },
+      {
+        "description": "it test only the status code",
+        "query": {
+          "name": "bob"
+        },
+        "result": {
+          "status": 200
+        }
       }
     ],
     "/unauthorized": [{
