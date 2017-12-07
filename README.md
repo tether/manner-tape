@@ -8,6 +8,19 @@
 
 ## Usage
 
+This module generate tape tests from a [manner](https://github.com/tether/manner) service and json object.
+
+```js
+const test = require('manner-tape')
+test({
+  get: {
+    '/:name': query => `hello ${query.name || 'world'}`
+  }
+}, json)
+```
+
+Here's an example of JSON object to run your tests against.
+
 ```json
 {
   "get": {
