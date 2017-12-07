@@ -18,6 +18,13 @@
           "payload": "hello bob"
         }
       }
-    ]
+    ],
+    "/unauthorized": [{
+      "description": "it should return unauthorized status code",
+      "result": {
+        "status": 403,
+        "payload": "Unauthorized"
+      }
+    }]
   }
 }
