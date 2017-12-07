@@ -1,0 +1,29 @@
+{
+  "name": "manner-tape",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tether/manner-tape.git"
+  },
+  "keywords": [
+    "tether"
+  ],
+  "author": "Petrofeed Inc",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tether/manner-tape/issues"
+  },
+  "homepage": "https://github.com/tether/manner-tape#readme",
+  "devDependencies": {
+    "tape": "*"
+  },
+  "dependencies": {
+    "manner-test": "^1.0.0",
+    "tape": "^4.8.0"
+  }
+}

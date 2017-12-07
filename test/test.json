@@ -1,0 +1,23 @@
+{
+  "get": {
+    "/": [
+      {
+        "description": "it should return hello world",
+        "result": {
+          "status": 200,
+          "payload": "hello world"
+        }
+      },
+      {
+        "description": "it should return hello bob when name bob is passed in query",
+        "query": {
+          "name": "bob"
+        },
+        "result": {
+          "status": 200,
+          "payload": "hello bob"
+        }
+      }
+    ]
+  }
+}
