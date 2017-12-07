@@ -24,15 +24,15 @@ Here's an example of JSON object to run your tests against.
 ```json
 {
   "get": {
-    "/": [
-      {
+    "/": {
+      "world": {
         "description": "it should return hello world",
         "result": {
           "status": 200,
           "payload": "hello world"
         }
       },
-      {
+      "bob": {
         "description": "it should return hello bob when name bob is passed in query",
         "query": {
           "name": "bob"
@@ -42,7 +42,7 @@ Here's an example of JSON object to run your tests against.
           "payload": "hello bob"
         }
       }
-    ]
+    }
   }
 }
 ```
