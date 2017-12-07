@@ -1,6 +1,6 @@
 {
   "name": "manner-tape",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Test manner services against JSON objects describing the expected outputs for given inputs",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,7 @@
     "tape": "*"
   },
   "dependencies": {
-    "manner-test": "^1.0.0",
+    "manner-test": "^2.0.0",
     "tape": "^4.8.0"
   }
 }
