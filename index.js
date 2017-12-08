@@ -19,6 +19,7 @@ module.exports = service
  */
 
 function service(service, json) {
+  const promises = []
   const test = manner(service)
   Object.keys(json).map(key => {
     const method = json[key]
@@ -26,12 +27,13 @@ function service(service, json) {
       var cases = method[route]
       var cb = test[key]
       if (cases instanceof Array) {
-        cases.map(obj => testCase(cb, route, obj))
+        cases.map(obj => promises.push(testCase(cb, route, obj)))
       } else {
-        Object.keys(cases).map(identifier => testCase(cb, route, cases[identifier]))
+        Object.keys(cases).map(identifier => promises.push(testCase(cb, route, cases[identifier])))
       }
     })
   })
+  return Promise.all(promises)
 }
 
 
@@ -45,22 +47,25 @@ function service(service, json) {
  */
 
 function testCase (method, route, obj) {
-  const result = obj.result
-  const {
-    status,
-    payload
-  } = result
-  tape(obj.description, assert => {
-    assert.plan(plan(status, payload))
-    method(route, obj.query || {}, obj.body || {}).then(response => {
-      if (status != null) assert.equal(response.status, status)
-      if (payload != null) {
-        if (typeof payload === 'function') {
-          assert.equal(payload(response.payload), true)
-        } else {
-          assert.deepEqual(response.payload, payload)
+  return new Promise(resolve => {
+    const result = obj.result
+    const {
+      status,
+      payload
+    } = result
+    tape(obj.description, assert => {
+      assert.plan(plan(status, payload))
+      method(route, obj.query || {}, obj.body || {}).then(response => {
+        if (status != null) assert.equal(response.status, status)
+        if (payload != null) {
+          if (typeof payload === 'function') {
+            assert.equal(payload(response.payload), true)
+          } else {
+            assert.deepEqual(response.payload, payload)
+          }
         }
-      }
+        resolve()
+      })
     })
   })
 }
