@@ -4,6 +4,7 @@
 
 const tape = require('tape')
 const manner = require('manner-test')
+const isokay = require('isokay')
 
 
 module.exports = service
@@ -15,12 +16,13 @@ module.exports = service
  *
  * @param {Object} service
  * @param {Object} json
+ * @param {Object} schema
  * @api public
  */
 
-function service(service, json) {
+function service(service, json, schema = {}) {
   const promises = []
-  const test = manner(service)
+  const test = manner(service, schema)
   Object.keys(json).map(key => {
     const method = json[key]
     Object.keys(method).map(route => {

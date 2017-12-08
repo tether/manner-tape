@@ -26,6 +26,14 @@
         "result": {
           "status": 200
         }
+      }, {
+        "description": "it should be validated against a schema",
+        "query": {
+          "name": "ellon"
+        },
+        "result": {
+          "status": 400
+        }
       }
     ],
     "/unauthorized": [{

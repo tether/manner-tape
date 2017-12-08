@@ -4,10 +4,11 @@
  */
 
 const test = require('..')
-const service = require('./service.js')
+const service = require('./service')
+const schema = require('./schema')
 
 
-test(service, require('./test.json'))
+test(service, require('./test.json'), schema)
 test(service, {
   get: {
     '/': {
