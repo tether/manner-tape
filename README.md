@@ -64,7 +64,7 @@ Here's an example of JSON object to run your tests against.
 }
 ```
 
-Please [check out our examples](https://github.com/tether/manner-tape/blob/master/test/test.json) for a complete list of features.
+Please [check out our examples](https://github.com/tether/manner-tape/blob/master/test/test.json) for a complete list of features (such as line delimited json, array and object compare, etc).
 
 ## Installation
 
