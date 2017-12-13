@@ -13,6 +13,18 @@ module.exports = {
         city: 'calgary',
       }
     }),
+    '/subsetArray': () => {
+      return [
+        'hello world',
+        {
+          id: 'hello world',
+          user: {
+            name: 'olivier',
+            city: 'calgary',
+          }
+        }
+      ]
+    },
     '/unauthorized': () => {
       const error = new Error('Unauthorized')
       error.status = 403

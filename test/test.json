@@ -68,6 +68,28 @@
         }
       }
     }],
+    "/subsetArray": [{
+      "description": "it should accept subset of an array payload #1",
+      "result": {
+        "status": 200,
+        "payload": [
+          "hello world"
+        ]
+      }
+    }, {
+      "description": "it should accept subset of an array payload #1",
+      "result": {
+        "status": 200,
+        "payload": [
+          "hello world",
+          {
+            "user": {
+              "city": "calgary"
+            }
+          }
+        ]
+      }
+    }],
     "/unauthorized": [{
       "description": "it should return unauthorized status code",
       "result": {
