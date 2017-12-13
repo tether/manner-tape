@@ -66,22 +66,24 @@ function testCase (method, route, obj) {
     const result = obj.result
     const {
       status,
+      multiline,
       payload
     } = result
     tape(obj.description, assert => {
       assert.plan(plan(status, payload))
       method(route, obj.query || {}, obj.body || {}).then(response => {
+        var returned = response.payload
         if (status != null) assert.equal(response.status, status)
         if (payload != null) {
           if (typeof payload === 'function') {
-            assert.equal(payload(response.payload), true)
+            assert.equal(payload(returned), true)
           } else {
+            if (multiline) returned = parse(returned)
             if (typeof payload === 'object') {
-              var clone = Object.assign({}, response.payload)
-              assert.deepEqual(response.payload, mixin(clone, payload))
+              var clone = Object.assign({}, returned)
+              assert.deepEqual(returned, mixin(clone, payload))
             } else {
-
-              assert.deepEqual(response.payload, payload)
+              assert.deepEqual(returned, payload)
             }
           }
         }
@@ -89,6 +91,21 @@ function testCase (method, route, obj) {
       })
     })
   })
+}
+
+
+/**
+ * Parse multiline json delimited by line break.
+ *
+ * @param {String} response
+ * @return {Array}
+ * @api private
+ */
+
+function parse (json) {
+  const arr = json.toString().split('\n')
+  arr.pop()
+  return arr.map(org => JSON.parse(org))
 }
 
 

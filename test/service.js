@@ -29,6 +29,9 @@ module.exports = {
       const error = new Error('Unauthorized')
       error.status = 403
       return error
+    },
+    '/multiline': () => {
+      return '{"keys":["org"],"length":1,"_fields":[{"identity":{"low":375,"high":0},"labels":["Organization"],"properties":{"name_legal":"Facebook"}}],"_fieldLookup":{"org":0}}\n{"keys":["org"],"length":1,"_fields":[{"identity":{"low":376,"high":0},"labels":["Organization"],"properties":{"name_legal":"Olivier"}}],"_fieldLookup":{"org":0}}\n'
     }
   }
 }

@@ -96,6 +96,20 @@
         "status": 403,
         "payload": "Unauthorized"
       }
+    }],
+    "/multiline": [{
+      "description": "should accept multiline json delimited by a line break",
+      "result": {
+        "status": 200,
+        "multiline": true,
+        "payload": [
+          {
+            "properties":{
+              "name_legal" : "Facebook"
+            }
+          }
+        ]
+      }
     }]
   }
 }
