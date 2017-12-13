@@ -36,6 +36,38 @@
         }
       }
     ],
+    "/subset": [{
+      "description": "it should accept subset of the response payload #1",
+      "result": {
+        "status": 200,
+        "payload": {
+          "user": {
+            "name": "olivier"
+          }
+        }
+      }
+    }, {
+      "description": "it should accept subset of the response payload #2",
+      "result": {
+        "status": 200,
+        "payload": {
+          "id": "hello world"
+        }
+      }
+    },
+    {
+      "description": "it should accept subset of the response payload #3",
+      "result": {
+        "status": 200,
+        "payload": {
+          "id": "hello world",
+          "user": {
+            "name": "olivier",
+            "city": "calgary"
+          }
+        }
+      }
+    }],
     "/unauthorized": [{
       "description": "it should return unauthorized status code",
       "result": {

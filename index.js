@@ -5,7 +5,12 @@
 const tape = require('tape')
 const manner = require('manner-test')
 const isokay = require('isokay')
+const mixin = require('mixin-deep')
 
+
+/**
+ * Expose test runner.
+ */
 
 module.exports = service
 
@@ -21,6 +26,14 @@ module.exports = service
  */
 
 function service(service, json, schema = {}) {
+  if (typeof service === 'string') {
+    service = require(service)
+    try {
+      schema = require(service + '/schema.js')
+    } catch (e) {
+      console.log(e)
+    }
+  }
   const promises = []
   const test = manner(service, schema)
   Object.keys(json).map(key => {
@@ -63,7 +76,13 @@ function testCase (method, route, obj) {
           if (typeof payload === 'function') {
             assert.equal(payload(response.payload), true)
           } else {
-            assert.deepEqual(response.payload, payload)
+            if (typeof payload === 'object') {
+              var clone = Object.assign({}, response.payload)
+              assert.deepEqual(response.payload, mixin(clone, payload))
+            } else {
+
+              assert.deepEqual(response.payload, payload)
+            }
           }
         }
         resolve()
@@ -71,6 +90,7 @@ function testCase (method, route, obj) {
     })
   })
 }
+
 
 
 /**
