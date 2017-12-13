@@ -5,7 +5,7 @@
 const tape = require('tape')
 const manner = require('manner-test')
 const isokay = require('isokay')
-const mixin = require('mixin-deep')
+const mixin = require('deepmix')
 
 
 /**
@@ -80,8 +80,9 @@ function testCase (method, route, obj) {
           } else {
             if (multiline) returned = parse(returned)
             if (typeof payload === 'object') {
-              var clone = Object.assign({}, returned)
-              assert.deepEqual(returned, mixin(clone, payload))
+              if (returned instanceof Buffer) returned = JSON.parse(returned)
+              var obj1 = merge(returned, payload)
+              assert.deepEqual(returned, obj1)
             } else {
               assert.deepEqual(returned, payload)
             }
@@ -91,6 +92,22 @@ function testCase (method, route, obj) {
       })
     })
   })
+}
+
+
+/**
+ * Merge two object together.
+
+ *
+ * @param {Object|Buffer} from
+ * @param {Object} to
+ * @return {Object}
+ * @api private
+ */
+
+function merge (from, to) {
+  var clone = Object.assign({}, from)
+  return mixin(clone, to)
 }
 
 

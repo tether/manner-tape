@@ -10,8 +10,14 @@ module.exports = {
       id: 'hello world',
       user: {
         name: 'olivier',
-        city: 'calgary',
-      }
+        city: 'calgary'
+      },
+      certs: [{
+        properties: 'hello',
+        identity: {
+          low: 200
+        }
+      }]
     }),
     '/subsetArray': () => {
       return [

@@ -67,6 +67,17 @@
           }
         }
       }
+    },
+    {
+      "description": "it should accept subset of the response payload #4",
+      "result": {
+        "status": 200,
+        "payload": {
+          "certs": [{
+            "properties": "hello"
+          }]
+        }
+      }
     }],
     "/subsetArray": [{
       "description": "it should accept subset of an array payload #1",

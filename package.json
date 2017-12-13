@@ -1,6 +1,6 @@
 {
   "name": "manner-tape",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Test manner services against JSON objects describing the expected outputs for given inputs",
   "main": "index.js",
   "scripts": {
@@ -23,8 +23,8 @@
     "tape": "*"
   },
   "dependencies": {
+    "deepmix": "^1.0.0",
     "manner-test": "^2.1.0",
-    "mixin-deep": "^1.3.0",
     "tape": "^4.8.0"
   }
 }
