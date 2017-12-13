@@ -14,7 +14,14 @@ This module generate tape tests from a [manner](https://github.com/tether/manner
 const test = require('manner-tape')
 test({
   get: {
-    '/:name': query => `hello ${query.name || 'world'}`
+    '/': query => `hello ${query.name || 'world'}`,
+    '/john': () => ({
+      id: "hello",
+      user: {
+        name: 'john',
+        city: 'paris'
+      }
+    })
   }
 }, json)
 ```
@@ -43,9 +50,21 @@ Here's an example of JSON object to run your tests against.
         }
       }
     }
-  }
+  },
+  "/john": [{
+      "description": "it should compare subset of data",
+      "result": {
+        "payload": {
+          "user": {
+            "city": "paris"
+          }
+        }
+      }
+  }]
 }
 ```
+
+Please [check out our examples](https://github.com/tether/manner-tape/blob/master/test/test.json) for a complete list of features.
 
 ## Installation
 
