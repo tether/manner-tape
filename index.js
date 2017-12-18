@@ -81,7 +81,7 @@ function testCase (method, route, obj) {
             if (multiline) returned = parse(returned)
             if (typeof payload === 'object') {
               if (returned instanceof Buffer) returned = JSON.parse(returned)
-              assert.deepEqual(merge(payload, returned), merge(returned, payload))
+              assert.deepEqual(returned, merge(returned, payload))
             } else {
               assert.deepEqual(returned, payload)
             }
