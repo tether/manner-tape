@@ -113,13 +113,13 @@
       "result": {
         "status": 200,
         "multiline": true,
-        "payload": [
-          {
+        "payload": [{
+          "_fields": [{
             "properties":{
               "name_legal" : "Facebook"
             }
-          }
-        ]
+          }]
+        }]
       }
     }]
   }

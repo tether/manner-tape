@@ -6,7 +6,7 @@ const tape = require('tape')
 const manner = require('manner-test')
 const isokay = require('isokay')
 const mixin = require('deepmix')
-
+const clone = require('clone-deep')
 
 /**
  * Expose test runner.
@@ -81,7 +81,7 @@ function testCase (method, route, obj) {
             if (multiline) returned = parse(returned)
             if (typeof payload === 'object') {
               if (returned instanceof Buffer) returned = JSON.parse(returned)
-              assert.deepEqual(returned, merge(returned, payload))
+              assert.deepEqual(returned, mixin(clone(returned), clone(payload)))
             } else {
               assert.deepEqual(returned, payload)
             }
@@ -93,21 +93,6 @@ function testCase (method, route, obj) {
   })
 }
 
-
-/**
- * Merge two object together.
-
- *
- * @param {Object|Buffer} from
- * @param {Object} to
- * @return {Object}
- * @api private
- */
-
-function merge (from, to) {
-  var clone = Object.assign({}, from)
-  return mixin(clone, to)
-}
 
 
 /**
