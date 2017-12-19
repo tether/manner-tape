@@ -26,29 +26,30 @@ module.exports = service
  */
 
 function service(service, json, schema = {}) {
-  if (typeof service === 'string') {
-    service = require(service)
-    try {
-      schema = require(service + '/schema.js')
-    } catch (e) {
-      console.log(e)
-    }
-  }
-  const promises = []
-  const test = manner(service, schema)
-  Object.keys(json).map(key => {
-    const method = json[key]
-    Object.keys(method).map(route => {
-      var cases = method[route]
-      var cb = test[key]
-      if (cases instanceof Array) {
-        cases.map(obj => promises.push(testCase(cb, route, obj)))
-      } else {
-        Object.keys(cases).map(identifier => promises.push(testCase(cb, route, cases[identifier])))
+  return new Promise((resolve, reject) => {
+    tape.onFinish(resolve)
+    if (typeof service === 'string') {
+      service = require(service)
+      try {
+        schema = require(service + '/schema.js')
+      } catch (e) {
+        console.log(e)
       }
+    }
+    const test = manner(service, schema)
+    Object.keys(json).map(key => {
+      const method = json[key]
+      Object.keys(method).map(route => {
+        var cases = method[route]
+        var cb = test[key]
+        if (cases instanceof Array) {
+          cases.map(obj => testCase(cb, route, obj))
+        } else {
+          Object.keys(cases).map(identifier => testCase(cb, route, cases[identifier]))
+        }
+      })
     })
   })
-  return Promise.all(promises)
 }
 
 
@@ -62,7 +63,6 @@ function service(service, json, schema = {}) {
  */
 
 function testCase (method, route, obj) {
-  return new Promise(resolve => {
     const result = obj.result
     const {
       status,
@@ -87,10 +87,8 @@ function testCase (method, route, obj) {
             }
           }
         }
-        resolve()
       })
     })
-  })
 }
 
 
