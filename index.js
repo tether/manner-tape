@@ -4,9 +4,9 @@
 
 const tape = require('tape')
 const manner = require('manner-test')
-const isokay = require('isokay')
 const mixin = require('deepmix')
 const clone = require('clone-deep')
+
 
 /**
  * Expose test runner.
