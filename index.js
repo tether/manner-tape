@@ -22,10 +22,11 @@ module.exports = service
  * @param {Object} service
  * @param {Object} json
  * @param {Object} schema
+ * @param {boolean} invertResults // when true, use notDeepEqual instead of deepEqual
  * @api public
  */
 
-function service(service, json, schema = {}) {
+function service(service, json, schema = {}, invertResults = false) {
   return new Promise((resolve, reject) => {
     tape.onFinish(resolve)
     if (typeof service === 'string') {
@@ -43,9 +44,9 @@ function service(service, json, schema = {}) {
         var cases = method[route]
         var cb = test[key]
         if (cases instanceof Array) {
-          cases.map(obj => testCase(cb, route, obj))
+          cases.map(obj => testCase(cb, route, obj, invertResults))
         } else {
-          Object.keys(cases).map(identifier => testCase(cb, route, cases[identifier]))
+          Object.keys(cases).map(identifier => testCase(cb, route, cases[identifier], invertResults))
         }
       })
     })
@@ -59,10 +60,11 @@ function service(service, json, schema = {}) {
  * @param {Function} method
  * @param {String} route
  * @param {Object} obj
+ * @param {boolean} invertResults // when true, use notDeepEqual instead of deepEqual
  * @api private
  */
 
-function testCase (method, route, obj) {
+function testCase (method, route, obj, invertResults) {
     const result = obj.result
     const {
       status,
@@ -70,20 +72,25 @@ function testCase (method, route, obj) {
       payload
     } = result
     tape(obj.description, assert => {
+      const assertDeepEqual = (...args) => invertResults ? assert.notDeepEqual(...args) : assert.deepEqual(...args)
+      const assertEqual = (...args) => invertResults ? assert.notEqual(...args) : assert.equal(...args)
       assert.plan(plan(status, payload))
       method(route, obj.query || {}, obj.body || {}).then(response => {
         var returned = response.payload
-        if (status != null) assert.equal(response.status, status)
+        if (status != null) assertEqual(response.status, status)
         if (payload != null) {
           if (typeof payload === 'function') {
-            assert.equal(payload(returned), true)
+            assertEqual(payload(returned), true)
           } else {
             if (multiline) returned = parse(returned)
+            const failureMessage = actual => process.env.VERBOSE_TAPE
+              ? `Expected ${invertResults ? 'not ' : '' }to find ${JSON.stringify(payload, null, 2)}\n\nAs a subset of ${JSON.stringify(actual)}`
+              : undefined
             if (typeof payload === 'object') {
               if (returned instanceof Buffer) returned = JSON.parse(returned)
-              assert.deepEqual(returned, mixin(clone(returned), clone(payload)))
+              assertDeepEqual(returned, mixin(clone(returned), clone(payload)), failureMessage(returned))
             } else {
-              assert.deepEqual(returned, payload)
+              assertDeepEqual(returned, payload, failureMessage(returned))
             }
           }
         }

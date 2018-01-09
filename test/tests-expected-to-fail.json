@@ -1,0 +1,26 @@
+{
+  "get": {
+    "/": [{
+      "description": "it should fail if the returned code is different than expected",
+      "result": {
+        "status": 201
+      }
+    }, {
+      "description": "it should fail if the payload is different than expected",
+      "result": {
+        "payload": "bye world"
+      }
+    }],
+    "/subset": [{
+      "description": "it should fail if the payload is missing something expected",
+      "result": {
+        "payload": {
+          "user": {
+            "name": "olivier",
+            "missing-property": true
+          }
+        }
+      }
+    }]
+  }
+}
