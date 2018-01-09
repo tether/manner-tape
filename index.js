@@ -84,7 +84,7 @@ function testCase (method, route, obj, invertResults) {
           } else {
             if (multiline) returned = parse(returned)
             const failureMessage = actual => process.env.VERBOSE_TAPE
-              ? `Expected ${invertResults ? 'not ' : '' }to find ${JSON.stringify(payload, null, 2)}\n\nAs a subset of ${JSON.stringify(actual)}`
+              ? `Expected ${invertResults ? 'not ' : '' }to find ${JSON.stringify(payload, null, 2)}\n\nAs a subset of ${JSON.stringify(actual, null, 2)}`
               : undefined
             if (typeof payload === 'object') {
               if (returned instanceof Buffer) returned = JSON.parse(returned)
